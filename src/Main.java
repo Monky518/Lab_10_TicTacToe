@@ -55,12 +55,12 @@ public class Main
                 // game check
                 if (moveCounter == 6 || moveCounter == 8)
                 {
-                    if (rowWin(row, true) || colWin(col, true) || diaWin(true))
+                    if (rowWin(row) || colWin(col) || diaWin())
                     {
                         System.out.println("O wins!");
                         done = true;
                     }
-                    else if (rowWin(row, false) || colWin(col, false) || diaWin(false))
+                    else if (possibleContinue())
                     {
                         // game continues
                         done = false;
@@ -78,7 +78,7 @@ public class Main
                         System.out.println("X wins!");
                         done = true;
                     }
-                    else if (rowWin(row) || colWin(col) || diaWin())
+                    else if (possibleContinue())
                     {
                         // game continues
                         done = false;
@@ -157,22 +157,82 @@ public class Main
 
     public static boolean possibleContinue()
     {
+        int[] emptyRow = new int[9];
+        int[] emptyCol = new int[9];
+        int emptyCounter = 0;
+        boolean possible = false;
+
+        // finds empty space to search with later
         for (int i = 0; i < 3; i++)
         {
-            if (board[i][0].matches(board[i][1]) || board[i][0].matches(board[i][2]) || board[i][2].matches(board[i][1]))
+            for (int j = 0; j < 3; j++)
             {
-                return true;
-                break;
+                if (board[i][j] == " ")
+                {
+                    emptyRow[emptyCounter] = i;
+                    emptyCol[emptyCounter] = j;
+
+                    emptyCounter++;
+                }
             }
-            else if (board[0][i].matches(board[1][i]) || board[0][i].matches(board[2][i]) || board[2][i].matches(board[1][i]))
+        }
+
+        // searching time :)
+        for (int i = 0; i <= emptyCounter; i++)
+        {
+            if (board[emptyRow[i]][0] == board[emptyRow[i]][1] || board[emptyRow[i]][0] == board[emptyRow[i]][2])
             {
-                return true;
-                break;
+                possible = true;
+                System.out.println("DEBUG: found valid move in row " + emptyRow[i]);
             }
-            else
+            else if (board[0][emptyCol[i]] == board[1][emptyCol[i]] || board[0][emptyCol[i]] == board[2][emptyCol[i]])
             {
-                if (board[0][0].matches(board[1][1]) || board[0][0].matches(board[2][2]))
+                possible = true;
+                System.out.println("DEBUG: found valid move in col " + emptyCol[i]);
             }
+            else if (topLeftDiagonal(emptyRow[i], emptyCol[i]))
+            {
+                if (board[0][0].matches(board[1][1]) || board[0][0].matches(board[2][2]) || board[1][1].matches(board[2][2]))
+                {
+                    possible = true;
+                    System.out.println("DEBUG: found valid move from topL to botR");
+                }
+            }
+            else if (topRightDiagonal(emptyRow[i], emptyCol[i]))
+            {
+                // (row == 0 && col == 2) || (row == 1 && col == 1) || (row == 2 && col == 0)
+                if (board[0][2].matches(board[1][1]) || board[0][2].matches(board[2][0]) || board[1][1].matches(board[2][0]))
+                {
+                    possible = true;
+                    System.out.println("DEBUG: found valid move from topL to botR");
+                }
+            }
+        }
+
+        return possible;
+    }
+
+    public static boolean topLeftDiagonal(int row, int col)
+    {
+        if ((row == 0 && col == 0) || (row == 1 && col == 1) || (row == 2 && col == 2))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public static boolean topRightDiagonal(int row, int col)
+    {
+        if ((row == 0 && col == 2) || (row == 1 && col == 1) || (row == 2 && col == 0))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }
