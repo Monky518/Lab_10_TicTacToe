@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Main
 {
     private static String[][] board = new String[3][3];
+
     enum GameStatus
     {
         win,
@@ -29,8 +30,8 @@ public class Main
 
             do
             {
-                row = SafeInput.getRangedInt(scan, "Enter which row you want", 1, 3);
-                column = SafeInput.getRangedInt(scan, "Enter which column you want", 1, 3);
+                row = SafeInput.getRangedInt(scan, "Enter which row you want", 1, 3) - 1;
+                column = SafeInput.getRangedInt(scan, "Enter which column you want", 1, 3) - 2;
 
                 if (board[row][column].equals(" "))
                     validInput = true;
@@ -48,7 +49,7 @@ public class Main
                 currentPlay = "X";
 
             if (roundCounter >= 5)
-                checkGameStatus();
+                checkGameStatus(row, column, currentPlay);
 
             if (currentGame == GameStatus.win)
             {
@@ -85,10 +86,111 @@ public class Main
         }
     }
 
-    public static void checkGameStatus()
+    public static void checkGameStatus(int row, int column, String player)
     {
-        boolean[] completedWinMethod = new boolean[8];
+        int faiCounter = 0;
 
+        if (row == column || (row + column) == 2)
+            diagonalWin(row, column, player);
 
+        rowWin(row, player);
+        columnWin(column, player);
+
+    }
+
+    /**
+     * Checks for win or tie from a row win by setting the status
+     * @param row the row with the new move
+     * @return true if a complete method and false if stillInSession
+     */
+    public static boolean rowWin(int row, String player)
+    {
+        if (board[row][0].equals(player) && board[row][1].equals(player) && board[row][2].equals(player))
+        {
+            currentGame = GameStatus.win;
+            return true;
+        }
+        else if (board[row][0].matches(" " + player) && board[row][1].matches(" " + player) && board[row][2].matches(" " + player))
+        {
+            currentGame = GameStatus.stillInSession;
+            return false;
+        }
+        else
+        {
+            currentGame = GameStatus.earlyTie;
+            return true;
+        }
+    }
+
+    /**
+     * Checks for win or tie from a column win by setting the status
+     * @param column the column with the new move
+     * @return true if a complete method and false if stillInSession
+     */
+    public static boolean columnWin(int column, String player)
+    {
+        if (board[0][column].equals(player) && board[1][column].equals(player) && board[2][column].equals(player))
+        {
+            currentGame = GameStatus.win;
+            return true;
+        }
+        else if (board[0][column].matches(" " + player) && board[1][column].matches(" " + player) && board[2][column].matches(" " + player))
+        {
+            currentGame = GameStatus.stillInSession;
+            return false;
+        }
+        else
+        {
+            currentGame = GameStatus.earlyTie;
+            return true;
+        }
+    }
+
+    /**
+     * Checks for win or tie from a diagonal win by setting the status
+     * @param row the row with the new move
+     * @param column the column with the new move
+     * @return true if a complete method and false if stillInSession
+     */
+    public static boolean diagonalWin(int row, int column, String player)
+    {
+        if (row == column)
+        {
+            // backslash
+            if (board[0][0].equals(player) && board[1][1].equals(player) && board[2][2].equals(player))
+            {
+                currentGame = GameStatus.win;
+                return true;
+            }
+            else if (board[0][0].matches(" " + player) && board[1][1].matches(" " + player) && board[2][2].matches(" " + player))
+            {
+                currentGame = GameStatus.stillInSession;
+                return false;
+            }
+            else
+            {
+                currentGame = GameStatus.earlyTie;
+                return true;
+            }
+        }
+        else // if row + column == 2
+        {
+            // forward slash
+            if (board[0][2].equals(player) && board[1][1].equals(player) && board[2][0].equals(player))
+            {
+                currentGame = GameStatus.win;
+                return true;
+            }
+            else if (board[0][2].matches(" " + player) && board[1][1].matches(" " + player) && board[2][0].matches(" " + player))
+            {
+                currentGame = GameStatus.stillInSession;
+                return false;
+            }
+            else
+            {
+                currentGame = GameStatus.earlyTie;
+                return true;
+            }
+        }
     }
 }
