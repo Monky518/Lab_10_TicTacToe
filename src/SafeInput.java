@@ -23,7 +23,7 @@ public class SafeInput
             }
             else
             {
-                System.out.println("\nYou must enter at least one character!\n");
+                System.out.println("\nYou must enter at least one character!");
             }
         } while(!done);
 
@@ -54,7 +54,7 @@ public class SafeInput
             else
             {
                 trash = pipe.nextLine();
-                System.out.println("\nYou entered " + trash + ", which is not a number!\n");
+                System.out.println("\nYou entered " + trash + ", which is not a number!");
 
             }
         } while(!done);
@@ -80,7 +80,7 @@ public class SafeInput
             else
             {
                 trash = pipe.nextLine();
-                System.out.println("\nYou entered " + trash + ", which is not a number!\n");
+                System.out.println("\nYou entered " + trash + ", which is not a number!");
             }
         } while(!done);
 
@@ -114,13 +114,13 @@ public class SafeInput
                 }
                 else
                 {
-                    System.out.println("\nYou entered " + value + ", which is not a part of the range!\n");
+                    System.out.println("\nYou entered " + value + ", which is not a part of the range!");
                 }
             }
             else
             {
                 trash = pipe.nextLine();
-                System.out.println("\nYou entered " + trash + ", which is not a number!\n");
+                System.out.println("\nYou entered " + trash + ", which is not a number!");
 
             }
         } while(!done);
@@ -155,13 +155,13 @@ public class SafeInput
                 }
                 else
                 {
-                    System.out.println("\nYou entered " + value + ", which is not a part of the range!\n");
+                    System.out.println("\nYou entered " + value + ", which is not a part of the range!");
                 }
             }
             else
             {
                 trash = pipe.nextLine();
-                System.out.println("\nYou entered " + trash + ", which is not a number!\n");
+                System.out.println("\nYou entered " + trash + ", which is not a number!");
 
             }
         } while(!done);
@@ -193,7 +193,7 @@ public class SafeInput
             }
             else
             {
-                System.out.println("\nYou must enter yes or no! [Y N]\n");
+                System.out.println("\nYou must enter yes or no! [Y N]");
             }
         } while(!done);
 
@@ -222,7 +222,7 @@ public class SafeInput
             }
             else
             {
-                System.out.println("\nYou must enter a String that matches the pattern" + regEx + "!\n");
+                System.out.println("\nYou must enter a String that matches the pattern" + regEx + "!");
             }
         } while(!done);
 
