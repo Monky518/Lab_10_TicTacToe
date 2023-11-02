@@ -66,7 +66,7 @@ public class Main
         } while(playAgain);
     }
 
-    public static void clearBoard()
+    private static void clearBoard()
     {
         for (int i = 0; i < 3; i++)
         {
@@ -77,7 +77,7 @@ public class Main
         }
     }
 
-    public static void showBoard()
+    private static void showBoard()
     {
         for (int i = 0; i < 3; i++)
         {
@@ -85,7 +85,7 @@ public class Main
         }
     }
 
-    public static boolean checkGameStatus(String player)
+    private static boolean checkGameStatus(String player)
     {
         int closedCounter = 0;
 
@@ -115,7 +115,7 @@ public class Main
         return true;
     }
 
-    public static void rowWin(String playerTest)
+    private static void rowWin(String playerTest)
     {
         for (int i = 0; i < 3; i++)
         {
@@ -128,7 +128,7 @@ public class Main
         }
     }
 
-    public static void columnWin(String playerTest)
+    private static void columnWin(String playerTest)
     {
         for (int i = 0; i < 3; i++)
         {
@@ -141,7 +141,7 @@ public class Main
         }
     }
 
-    public static void diagonalWin(String playerTest)
+    private static void diagonalWin(String playerTest)
     {
         // backslash
         if (board[0][0].equals(playerTest) && board[1][1].equals(playerTest) && board[2][2].equals(playerTest))
@@ -160,7 +160,7 @@ public class Main
             winMethods[7] = WinStatus.OPEN;
     }
 
-    public static String changePlayer(String player)
+    private static String changePlayer(String player)
     {
         if (player.matches("X"))
             player = "O";
